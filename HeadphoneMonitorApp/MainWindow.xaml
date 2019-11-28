@@ -1,0 +1,143 @@
+﻿<Window x:Class="HeadphoneMonitorApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HeadphoneMonitorApp"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=System"
+        mc:Ignorable="d"
+        Title="Headphone Monitor" Height="300.716" Width="300.157" Icon="DefaultIcon.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" RenderTransformOrigin="0.5,0.5" Background="#FFF4FDFF" StateChanged="Window_StateChanged" IsVisibleChanged="Window_IsVisibleChanged"
+        Name="_this" DataContext="_this">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="VolumeActionValues" 
+                            MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:VolumeAction" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ImageBrush x:Key="volumeHighImage" ImageSource="Images/Status-audio-volume-high.ico" />
+        <ImageBrush x:Key="volumeMutedImage" ImageSource="Images/Status-audio-volume-muted.ico" />
+        <ImageBrush x:Key="headphoneImage" ImageSource="Images/Iconmoon-Viva-Headphones.ico" />
+        <ImageBrush x:Key="headphoneXImage" ImageSource="Images/Iconmoon-Viva-Headphones-X.ico" />
+    </Window.Resources>
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="0" Padding="0" Background="#FFEAFDFF">
+            <TabItem Header="Main" >
+                <Grid Margin="0">
+                    <Grid Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label x:Name="label_Copy2" Content="Volume" HorizontalAlignment="Left" Margin="0,2" VerticalAlignment="Center" Width="75" Padding="1"/>
+                            <Label x:Name="label_Copy3" Content="Headphones" HorizontalAlignment="Left" Margin="0,2" VerticalAlignment="Center" Padding="1" Grid.Row="1" Width="75"/>
+                            <Image x:Name="volumeImage" Grid.Column="1" Margin="0,3" Source="Images/Status-audio-volume-high.ico" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Fill" Height="27" MouseLeftButtonUp="volumeImage_MouseLeftButtonUp"/>
+                            <Image x:Name="headphonesImage" Grid.Column="1" Margin="0,3" Source="Images/Iconmoon-Viva-Headphones.ico" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill" Height="27" Grid.Row="1"/>
+                            <!--<Image x:Name="headphonesXImage" Grid.Column="1" Margin="0" Source="Images/1490955674_Close_Icon1.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill" Height="25" Grid.Row="2"/>-->
+
+                        </Grid>
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label x:Name="label_Copy" Content="" Margin="0,3,0,1" VerticalAlignment="Center" Padding="1"/>
+
+                            <ComboBox x:Name="comboxHeadphonesConnectedAction" HorizontalAlignment="Left" Margin="0,2" VerticalAlignment="Center" Grid.Column="1"  SelectedIndex="1"
+                                  ItemsSource="{Binding Source={StaticResource VolumeActionValues}}" Width="72" SelectionChanged="comboxHeadphonesConnectedAction_SelectionChanged" SnapsToDevicePixels="True"/>
+                            <ComboBox x:Name="comboxHeadphonesNotConnectedAction" HorizontalAlignment="Left" Margin="0,2" Grid.Row="1" VerticalAlignment="Center" Width="72" Grid.Column="1"  SelectedIndex="0"
+                                  ItemsSource="{Binding Source={StaticResource VolumeActionValues}}" SelectionChanged="comboxHeadphonesNotConnectedAction_SelectionChanged"/>
+                            <Label x:Name="label" Content="Headphones connected action" HorizontalAlignment="Left" Margin="0,2" VerticalAlignment="Center" Padding="1,1,4,1"/>
+                            <Label x:Name="label1" Content="Headphones not connected action" HorizontalAlignment="Left" Margin="0,2" Grid.Row="1" VerticalAlignment="Center" Padding="1,1,4,1"/>
+
+                        </Grid>
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="btnMinimizeToTray" Content="Minimize to tray" Grid.Row="0" HorizontalAlignment="Left" Padding="7,1,7,2" Click="btnMinimizeToTray_Click" Width="110" Margin="0,2"/>
+                            <Button x:Name="btnExit" Content="Exit" Grid.Row="1" HorizontalAlignment="Left" Padding="7,1,7,2" Width="110" Click="btnExit_Click" Margin="0,2"/>
+
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Advanced">
+                <Grid Margin="0">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="checkBoxToTrayOnMinimize" Content="Minimize to tray when minimized" HorizontalAlignment="Left" Margin="0,2" VerticalAlignment="Top" Unchecked="checkBoxToTrayOnMinimize_CheckedChanged" Checked="checkBoxToTrayOnMinimize_CheckedChanged"/>
+                            <CheckBox x:Name="checkBoxToTrayOnClose" Content="Minimize to tray when closed" HorizontalAlignment="Left" Margin="0,2" VerticalAlignment="Top" Grid.Row="2" Checked="checkBoxToTrayOnClose_CheckedChanged" Unchecked="checkBoxToTrayOnClose_CheckedChanged"/>
+                        </Grid>
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="checkBoxLaunchOnStartup" Content="Launch on startup" HorizontalAlignment="Left" Margin="0,2" Unchecked="checkBoxLaunchOnStartup_CheckedChanged"  Checked="checkBoxLaunchOnStartup_CheckedChanged"/>
+                            <CheckBox x:Name="checkBoxLaunchMinimized" Content="Launch minimized" HorizontalAlignment="Left" Margin="0,2" VerticalAlignment="Top" Grid.Row="2" Checked="checkBoxLaunchMinimized_CheckedChanged"  Unchecked="checkBoxLaunchMinimized_CheckedChanged"/>
+                        </Grid>
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="comboxProcessPriority" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1"  SelectedIndex="1"
+                                  ItemsSource="{Binding ElementName=_this, Path=ProcessPriorities}" Width="100" SelectionChanged="comboxProcessPriority_SelectionChanged" Padding="6,3,1,3"/>
+                            <Label x:Name="label2" Content="Process Priority" HorizontalAlignment="Left" Margin="0,2" VerticalAlignment="Center" Padding="1,1,4,1"/>
+
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Label x:Name="labelDesc" Content="Version: 1.0.0.0" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Padding="1,1,4,1" Foreground="#FF92C8D3" FontWeight="SemiBold" Grid.Row="1"/>
+    </Grid>
+
+</Window>
