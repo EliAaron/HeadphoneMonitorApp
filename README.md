@@ -1,5 +1,7 @@
 # Headphone Monitor App
 
+![App Screenshot](./HeadphoneMonitorApp/Images/App_Screenshot.png)
+
 ## About the app
 
 Monitors headphone connection to PC's line-in audio jack.
