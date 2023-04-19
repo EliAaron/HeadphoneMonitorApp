@@ -6,9 +6,10 @@
 
 Monitors headphone connection to PC's line-in audio jack.
 
-App properties:
+App features:
+* Detects headphone connection state.
 * Shows headphone connection state on app and system tray icon.
-* Sets headphone connected and not connected actions - mute, unmute or none.
+* Optional headphone connected and not connected actions (mute/unmute/none).
 
 ***Note: the app was tested and works with LENOVO Y50-70 laptop. It did not work on other PC's.***
 
@@ -16,11 +17,11 @@ App properties:
 
 * The program is written in C#.
 * The UI is built with WPF.
-* NAudio library is used for accessing audio device properties and events.
+* NAudio library is used to access audio device properties and events.
 
 ## How headphone connection is detected
 
-As far as I know, there is now standard way to detect line-in audio jack connection for PC's, it is device specific.
+As far as I know, there is no standard way to detect a line-in audio jack connection for PC's, it is device specific.
 I built the app specifically for my LENOVO Y50-70 laptop. To detect a connection change, I used NAudio to read audio device properties and checked what property changed. The property that changed was used to detect a connection change.
 
 ## Enhancing the app to be not device-specific
